@@ -39,7 +39,7 @@ jobs:
 
       - name: Configure Meson project
         run: |
-          meson setup build --prefix $CONDA_PREFIX
+          meson setup build
 
       - name: Build project
         run: |
