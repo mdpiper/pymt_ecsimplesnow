@@ -1,8 +1,8 @@
 project(
     'pymt_ecsimplesnow',
-    'fortran',
-    'cython',
+    'fortran', 'c', 'cython',
     version: 'v0.3',
+    license: 'MIT',
 )
 
 py = import('python').find_installation(pure: false)
