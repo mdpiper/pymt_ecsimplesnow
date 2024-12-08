@@ -28,6 +28,7 @@ incs = include_directories(
 deps = [
     compiler.find_library('bmif'),
     compiler.find_library('bmisnowf'),
+    py.dependency(),
 ]
 
 # Files get copied to <python directory>/site-packages/<subdir>
