@@ -33,9 +33,21 @@ jobs:
           conda info
           conda list
 
-      - name: Build and install package
+      # - name: Build and install package
+      #   run: |
+      #     pip install .[dev]
+
+      - name: Configure Meson project
         run: |
-          pip install .[dev]
+          meson setup build --prefix $CONDA_PREFIX
+
+      - name: Build project
+        run: |
+          meson compile -C build
+
+      - name: Install project
+        run: |
+          meson install -C build
 
       - name: Test import
         working-directory: ${{ github.workspace }}/examples
