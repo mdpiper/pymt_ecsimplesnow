@@ -1,12 +1,11 @@
 project(
     'pymt_ecsimplesnow',
-    'fortran', 'c', 'cython',
+    'c', 'cython',
     version: 'v0.3',
     license: 'MIT',
 )
 
 py = import('python').find_installation(pure: false)
-compiler = meson.get_compiler('fortran', native: false)
 
 python_inc = py.get_path('data') / 'include'
 numpy_inc = run_command(
@@ -25,6 +24,9 @@ incs = include_directories(
     ]
 )
 
+add_languages('fortran', native: false)
+compiler = meson.get_compiler('fortran')
+message('The Fortran compiler id is:', compiler.get_id())
 deps = [
     compiler.find_library('bmif'),
     compiler.find_library('bmisnowf'),
