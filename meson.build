@@ -67,4 +67,4 @@ install_subdir(
 )
 
 # This is a temporary fix for editable installs.
-run_command('cp', '-r', 'pymt_ecsimplesnow/data', 'build')
+run_command('cp', '-r', 'pymt_ecsimplesnow/data', 'build', check: false)
