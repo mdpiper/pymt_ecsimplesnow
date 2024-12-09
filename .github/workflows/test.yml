@@ -33,21 +33,9 @@ jobs:
           conda info
           conda list
 
-      # - name: Build and install package
-      #   run: |
-      #     pip install .[dev]
-
-      - name: Configure Meson project
+      - name: Build and install project
         run: |
-          meson setup build
-
-      - name: Build project
-        run: |
-          meson compile -C build
-
-      - name: Install project
-        run: |
-          meson install -C build
+          pip install . -vvv
 
       - name: Test import
         working-directory: ${{ github.workspace }}/examples
@@ -96,7 +84,7 @@ jobs:
       - name: Configure Meson project
         run: |
           set "FC=flang.exe"
-          meson setup build --prefix $env:CONDA_PREFIX --native-file meson-native-flang.ini
+          meson setup build --prefix $env:CONDA_PREFIX --python.install-env auto --native-file meson-native-flang.ini
 
       - name: Test import
         working-directory: ${{ github.workspace }}/examples
