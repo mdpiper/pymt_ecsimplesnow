@@ -81,15 +81,10 @@ jobs:
           conda info
           conda list
 
-      - name: Remove pre-installed Fortran from build machine
-        run: |
-          choco list
-          choco uninstall rtools --remove-dependencies
-          choco list
-
       - name: Configure Meson project
         run: |
-          meson setup build --prefix $env:CONDA_PREFIX --python.install-env auto --native-file meson-native-flang.ini
+          $env:PATH = "$env:LIBRARY_PREFIX\bin;$env:PATH"
+          meson setup build --prefix $env:CONDA_PREFIX
 
       - name: Test import
         working-directory: ${{ github.workspace }}/examples
