@@ -84,7 +84,7 @@ jobs:
       - name: Remove pre-installed Fortran from build machine
         run: |
           choco list
-          choco uninstall gfortran
+          choco uninstall rtools
           choco list
 
       - name: Configure Meson project
