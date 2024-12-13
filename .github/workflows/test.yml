@@ -39,17 +39,21 @@ jobs:
         run: |
           echo "FC=C:/Users/runneradmin/miniconda3/envs/fbld/Library/bin/flang.exe" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
 
-      - name: Configure Meson project
-        run: |
-          meson setup build --prefix $env:CONDA_PREFIX
+      # - name: Configure Meson project
+      #   run: |
+      #     meson setup build --prefix $env:CONDA_PREFIX
+
+      # - name: Build project
+      #   run: |
+      #     meson compile -C build
+
+      # - name: Install project
+      #   run: |
+      #     meson install -C build
 
       - name: Build project
         run: |
-          meson compile -C build
-
-      - name: Install project
-        run: |
-          meson install -C build
+          python -m pip install .
 
       - name: Test import
         working-directory: ${{ github.workspace }}/examples
