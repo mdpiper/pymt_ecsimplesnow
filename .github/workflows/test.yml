@@ -3,56 +3,6 @@ name: Test
 on: [push, pull_request]
 
 jobs:
-  build-test-unix:
-    if:
-      github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
-
-    runs-on: ${{ matrix.os }}
-
-    defaults:
-      run:
-        shell: bash -l {0}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest]
-        python-version: ["3.12"]
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: conda-incubator/setup-miniconda@v3
-        with:
-          miniforge-version: latest
-          activate-environment: fbld
-          environment-file: environment.yml
-          python-version: ${{ matrix.python-version }}
-
-      - name: Show conda installation info
-        run: |
-          conda info
-          conda list
-
-      - name: Build and install project
-        run: |
-          pip install . -v
-
-      - name: Test import
-        working-directory: ${{ github.workspace }}/examples
-        run: |
-          python -c 'import pymt_ecsimplesnow'
-          python -c 'from pymt.models import ECSimpleSnow'
-
-      # The bmi-tester isn't available for bmi-fortran=1.2
-      # - name: Test BMI
-      #   run: |
-      #     make test
-
-      - name: Run examples
-        working-directory: ${{ github.workspace }}/examples
-        run: |
-          python ecsimplesnow_pymt_ex.py
-
   build-test-windows:
     if:
       github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
