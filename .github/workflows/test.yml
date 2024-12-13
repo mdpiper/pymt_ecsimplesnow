@@ -37,7 +37,7 @@ jobs:
 
       - name: Set the FC environment variable to the Fortran conda compiler
         run: |
-          echo "FC=C:/Users/runneradmin/miniconda3/envs/fbld/Library/bin/flang-new.exe" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+          echo "FC=C:/Users/runneradmin/miniconda3/envs/fbld/Library/bin/flang.exe" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
 
       - name: Configure Meson project
         run: |
