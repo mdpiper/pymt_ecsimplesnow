@@ -1,6 +1,6 @@
 project(
     'pymt_ecsimplesnow',
-    'fortran','cython',
+    'fortran', 'c', 'cython',
     version: 'v0.3',
     license: 'MIT',
 )
