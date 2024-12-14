@@ -15,6 +15,7 @@ dependencies:
   - pkg-config
   - meson-python
   - ninja
+  - python-build
   - numpy
   # - bmi-tester >=0.5.5
-  - pymt >=1.3.2
+  # - pymt >=1.3.2
