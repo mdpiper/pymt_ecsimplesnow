@@ -51,9 +51,14 @@ jobs:
       #   run: |
       #     meson install -C build
 
-      - name: Build project
+      # - name: Build project
+      #   run: |
+      #     python -m pip install . -v
+
+      - name: Build wheel
         run: |
-          python -m pip install . -v
+          mkdir build
+          python -m build -w -n -x -Cbuilddir=build -Cinstall-args=--tags=runtime,python-runtime,devel -Csetup-args=-Dcpp_std=c++11 -Csetup-args=-Dfortran_std=none
 
       - name: Test import
         working-directory: ${{ github.workspace }}/examples
