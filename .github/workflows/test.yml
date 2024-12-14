@@ -53,7 +53,7 @@ jobs:
 
       - name: Build project
         run: |
-          python -m pip install .
+          python -m pip install . -v
 
       - name: Test import
         working-directory: ${{ github.workspace }}/examples
