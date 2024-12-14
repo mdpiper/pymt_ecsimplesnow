@@ -58,7 +58,7 @@ jobs:
       - name: Build wheel
         run: |
           mkdir build
-          python -m build -w -n -x -Cbuilddir=build -Cinstall-args=--tags=runtime,python-runtime,devel -Csetup-args=-Dcpp_std=c++11 -Csetup-args=-Dfortran_std=none
+          python -m build -w -n -x -Cbuilddir="build" -Cinstall-args="--tags=runtime,python-runtime,devel" -Csetup-args="-Dcpp_std=c++11" -Csetup-args="-Dfortran_std=none"
 
       - name: Test import
         working-directory: ${{ github.workspace }}/examples
