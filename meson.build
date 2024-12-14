@@ -25,7 +25,7 @@ incs = include_directories(
 )
 
 # add_languages('fortran', native: false)
-# compiler = meson.get_compiler('fortran')
+compiler = meson.get_compiler('fortran')
 # message('The Fortran compiler id is:', compiler.get_id())
 deps = [
     compiler.find_library('bmif'),
