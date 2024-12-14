@@ -1,6 +1,6 @@
 project(
     'pymt_ecsimplesnow',
-    'fortran', 'c', 'cython',
+    'c', 'cython',
     version: 'v0.3',
     license: 'MIT',
 )
@@ -24,7 +24,7 @@ incs = include_directories(
     ]
 )
 
-# add_languages('fortran', native: false)
+add_languages('fortran', native: false)
 compiler = meson.get_compiler('fortran')
 # message('The Fortran compiler id is:', compiler.get_id())
 deps = [
