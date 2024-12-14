@@ -1,6 +1,6 @@
 project(
     'pymt_ecsimplesnow',
-    'c', 'cython',
+    'fortran','cython',
     version: 'v0.3',
     license: 'MIT',
 )
@@ -24,9 +24,9 @@ incs = include_directories(
     ]
 )
 
-add_languages('fortran', native: false)
-compiler = meson.get_compiler('fortran')
-message('The Fortran compiler id is:', compiler.get_id())
+# add_languages('fortran', native: false)
+# compiler = meson.get_compiler('fortran')
+# message('The Fortran compiler id is:', compiler.get_id())
 deps = [
     compiler.find_library('bmif'),
     compiler.find_library('bmisnowf'),
