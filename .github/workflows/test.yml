@@ -19,47 +19,47 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ilammy/msvc-dev-cmd@v1
-      - uses: conda-incubator/setup-miniconda@v3
+      - uses: mamba-org/setup-micromamba@v2
         with:
-          miniforge-version: latest
-          activate-environment: fbld
+          micromamba-version: latest
           environment-file: environment.yml
-          python-version: "3.12"
+          init-shell: >-
+            powershell
 
-      - name: Show conda installation info
-        run: |
-          conda info
-          conda list
+      # - name: Show conda installation info
+      #   run: |
+      #     conda info
+      #     conda list
 
       # - name: Set the FC environment variable to the Fortran conda compiler
       #   run: |
       #     echo "FC=$CONDA_PREFIX/Library/bin/flang-new.exe" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
 
-      - name: Set the FC environment variable to the Fortran conda compiler
+      # - name: Set the FC environment variable to the Fortran conda compiler
+      #   run: |
+      #     echo "FC=C:/Users/runneradmin/miniconda3/envs/fbld/Library/bin/flang.exe" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+
+      - name: Configure Meson project
         run: |
-          echo "FC=C:/Users/runneradmin/miniconda3/envs/fbld/Library/bin/flang.exe" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+          meson setup build --prefix $env:CONDA_PREFIX
 
-      # - name: Configure Meson project
-      #   run: |
-      #     meson setup build --prefix $env:CONDA_PREFIX
+      - name: Build project
+        run: |
+          meson compile -C build
 
-      # - name: Build project
-      #   run: |
-      #     meson compile -C build
+      - name: Install project
+        run: |
+          meson install -C build
 
-      # - name: Install project
-      #   run: |
-      #     meson install -C build
-
-      # - name: Build project
+      # - name: Build project with pip
       #   run: |
       #     python -m pip install . -v
 
-      - name: Build wheel
-        run: |
-          $env:INCLUDE="C:\Users\runneradmin\miniconda3\envs\fbld\Library\include;$env:INCLUDE"
-          mkdir build
-          python -m build -w -n -x -Cbuilddir="build" -Cinstall-args="--tags=runtime,python-runtime,devel" -Csetup-args="-Dcpp_std=c++11" -Csetup-args="-Dfortran_std=none"
+      # - name: Build wheel
+      #   run: |
+      #     $env:INCLUDE="C:\Users\runneradmin\miniconda3\envs\fbld\Library\include;$env:INCLUDE"
+      #     mkdir build
+      #     python -m build -w -n -x -Cbuilddir="build" -Cinstall-args="--tags=runtime,python-runtime,devel" -Csetup-args="-Dcpp_std=c++11" -Csetup-args="-Dfortran_std=none"
 
       - name: Test import
         working-directory: ${{ github.workspace }}/examples
