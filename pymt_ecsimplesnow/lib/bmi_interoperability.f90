@@ -3,7 +3,7 @@
 !
 module bmi_interoperability
 
-  use iso_c_binding
+  use, intrinsic :: iso_c_binding
   use bmif_1_2
   use bmisnowf
 
@@ -41,11 +41,16 @@ contains
     integer (c_int), intent(in), value :: n
     character (len=1, kind=c_char), intent(in) :: config_file(n)
     integer (c_int) :: i, status
-    character (len=n, kind=c_char) :: config_file_
+    character (len=BMI_MAX_VAR_NAME, kind=c_char) :: config_file_
 
     ! Convert `config_file` from rank-1 array to scalar.
     do i = 1, n
        config_file_(i:i) = config_file(i)
+    enddo
+
+    ! Pad with spaces to max size.
+    do i = n+1, BMI_MAX_VAR_NAME
+       config_file_(i:i) = ' '
     enddo
 
     status = model_array(model_index)%initialize(config_file_)
@@ -634,18 +639,21 @@ contains
     status = model_array(model_index)%get_var_type(var_name_, var_type)
 
     select case(var_type)
-    case("integer")
+    case("integer", "INTEGER")
        status = model_array(model_index)%get_value_ptr(var_name_, idest)
-       ref = c_loc(idest(1))
-       status = BMI_SUCCESS
-    case("real")
+       if (status == BMI_SUCCESS) then
+          ref = c_loc(idest(1))
+       end if
+    case("real", "REAL", "real*4", "REAL*4")
        status = model_array(model_index)%get_value_ptr(var_name_, rdest)
-       ref = c_loc(rdest(1))
-       status = BMI_SUCCESS
-    case("double precision")
+       if (status == BMI_SUCCESS) then
+          ref = c_loc(rdest(1))
+       end if
+    case("double precision", "DOUBLE PRECISION", "real*8", "REAL*8")
        status = model_array(model_index)%get_value_ptr(var_name_, ddest)
-       ref = c_loc(ddest(1))
-       status = BMI_SUCCESS
+       if (status == BMI_SUCCESS) then
+          ref = c_loc(ddest(1))
+       end if
     case default
        status = BMI_FAILURE
     end select
